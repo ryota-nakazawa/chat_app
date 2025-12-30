@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AIキャラクターとチャットできるアプリケーション">
+  <title>キャラクターチャット</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ナビゲーション -->
+  <nav class="main-nav">
+    <div class="nav-brand">
+      <span class="nav-logo">💬</span>
+      <span class="nav-title">キャラクターチャット</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">
+        <span class="nav-icon">💬</span>
+        チャット
+      </a>
+      <a href="generator.html" class="nav-link">
+        <span class="nav-icon">🎨</span>
+        画像生成
+      </a>
+    </div>
+  </nav>
+
+  <div class="app-container">
+    <!-- 左側：キャラクター表示エリア -->
+    <aside class="character-panel">
+      <div class="character-header">
+        <h2>キャラクター</h2>
+      </div>
+      <div class="character-display">
+        <div class="character-avatar" id="characterAvatar" title="クリックして画像を変更">
+          <div class="avatar-placeholder" id="avatarPlaceholder">
+            <span class="avatar-icon" id="avatarIcon">🤖</span>
+          </div>
+          <img class="avatar-image" id="avatarImage" style="display: none;" alt="キャラクターアバター">
+          <div class="avatar-overlay">
+            <span>📷</span>
+          </div>
+          <input type="file" id="avatarInput" accept="image/*" hidden>
+        </div>
+        <div class="character-info">
+          <h3 class="character-name" id="characterName">AIアシスタント</h3>
+          <p class="character-status" id="characterStatus">オンライン</p>
+        </div>
+      </div>
+      <div class="character-description">
+        <p class="description-label">これまでの会話:</p>
+        <p id="characterDescription">まだ会話がありません。話しかけてみてください！</p>
+      </div>
+    </aside>
+
+    <!-- 右側：チャットエリア -->
+    <main class="chat-panel">
+      <header class="chat-header">
+        <div class="chat-title">
+          <h1>チャット</h1>
+          <span class="online-badge">● オンライン</span>
+        </div>
+      </header>
+
+      <div class="chat-messages" id="chatMessages">
+        <!-- メッセージがここに追加される -->
+        <div class="message assistant" id="initialMessage">
+          <div class="message-avatar" id="initialMessageAvatar">🤖</div>
+          <div class="message-content">
+            <div class="message-bubble">
+              <p>こんにちは！私はAIアシスタントです。何かお話ししましょう！</p>
+            </div>
+            <span class="message-time">12:00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-container">
+        <div class="typing-indicator" id="typingIndicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <form class="chat-input-form" id="chatForm">
+          <div class="input-wrapper">
+            <textarea id="messageInput" placeholder="メッセージを入力..." rows="1" maxlength="1000"></textarea>
+            <button type="submit" class="send-button" id="sendButton">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13M22 2L15 22L11 13L2 9L22 2Z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

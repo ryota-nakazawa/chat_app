@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Environment variables (contains API keys)
+.env
+
+# User-generated content
+images/
+videos/
+audio/
+conversations/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+*.tmp
+*.temp

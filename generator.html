@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AIでキャラクター画像を生成">
+  <title>画像生成 - キャラクターチャット</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <!-- ナビゲーション -->
+  <nav class="main-nav">
+    <div class="nav-brand">
+      <span class="nav-logo">💬</span>
+      <span class="nav-title">キャラクターチャット</span>
+    </div>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">
+        <span class="nav-icon">💬</span>
+        チャット
+      </a>
+      <a href="generator.html" class="nav-link active">
+        <span class="nav-icon">🎨</span>
+        画像生成
+      </a>
+    </div>
+  </nav>
+
+  <div class="generator-container">
+    <!-- メインコンテンツ -->
+    <main class="generator-main">
+      <header class="generator-header">
+        <h1>🎨 キャラクター画像生成</h1>
+        <p>AIにキャラクターのイメージを伝えて、オリジナルのアバター画像を作成しましょう</p>
+      </header>
+
+      <!-- プロンプト入力エリア -->
+      <section class="prompt-section">
+        <div class="prompt-card">
+          <h2>キャラクターの説明</h2>
+
+          <!-- 画像スタイル選択 -->
+          <div class="style-selection">
+            <label for="imageStyleSelect" class="style-label">🎨 画像スタイル</label>
+            <select id="imageStyleSelect" class="style-select">
+              <option value="realistic-female">リアル（女性）</option>
+              <option value="realistic-male">リアル（男性）</option>
+              <option value="anime">アニメ風</option>
+              <option value="animal">動物キャラクター</option>
+              <option value="fantasy">ファンタジー</option>
+              <option value="cyberpunk">サイバーパンク</option>
+            </select>
+          </div>
+
+          <div class="prompt-input-wrapper">
+            <textarea id="promptInput" placeholder="例: 長い茶色の髪、笑顔、都市の夕暮れ背景" rows="4" maxlength="1000"></textarea>
+            <div class="prompt-hints" id="promptHints">
+              <span class="hint-label">ヒント:</span>
+              <button type="button" class="hint-chip" data-hint="長い茶色の髪、笑顔、都市の夕暮れ背景">夕暮れポートレート</button>
+              <button type="button" class="hint-chip" data-hint="黒髪ロング、エレガント、スタジオ撮影">スタジオ風</button>
+              <button type="button" class="hint-chip" data-hint="ショートヘア、クール、ストリートファッション">ストリート風</button>
+            </div>
+          </div>
+          <button type="button" class="generate-button" id="generateButton">
+            <span class="button-icon">✨</span>
+            画像を生成する
+          </button>
+        </div>
+      </section>
+
+      <!-- 生成結果エリア -->
+      <section class="result-section" id="resultSection" style="display: none;">
+        <div class="result-card">
+          <h2>生成結果</h2>
+          <div class="result-image-wrapper">
+            <img id="generatedImage" alt="生成された画像" class="result-image">
+          </div>
+          <div class="result-actions">
+            <button type="button" class="action-button primary" id="generateVideoButton">
+              <span class="button-icon">🎬</span>
+              リップシンク動画を生成
+            </button>
+            <button type="button" class="action-button primary" id="setAvatarButton">
+              <span class="button-icon">👤</span>
+              この画像をアバターに設定
+            </button>
+            <button type="button" class="action-button secondary" id="regenerateButton">
+              <span class="button-icon">🔄</span>
+              別の画像を生成
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 動画生成中表示 -->
+      <section class="video-loading-section" id="videoLoadingSection" style="display: none;">
+        <div class="loading-card">
+          <div class="loading-spinner"></div>
+          <p>動画を生成中...</p>
+          <span class="loading-hint">数分かかる場合があります。しばらくお待ちください</span>
+        </div>
+      </section>
+
+      <!-- 動画結果エリア -->
+      <section class="video-result-section" id="videoResultSection" style="display: none;">
+        <div class="result-card">
+          <h2>🎬 リップシンク動画</h2>
+          <div class="video-wrapper">
+            <video id="generatedVideo" class="result-video" loop muted playsinline>
+              お使いのブラウザは動画に対応していません
+            </video>
+          </div>
+
+          <!-- 声選択 -->
+          <div class="voice-selection">
+            <label for="voiceSelect" class="voice-label">🎤 キャラクターの声</label>
+            <select id="voiceSelect" class="voice-select">
+              <option value="Aoede">Aoede（女性・明るい）</option>
+              <option value="Kore">Kore（女性・柔らかい）</option>
+              <option value="Charon">Charon（男性・落ち着いた）</option>
+              <option value="Fenrir">Fenrir（男性・力強い）</option>
+              <option value="Puck">Puck（中性的・元気）</option>
+            </select>
+          </div>
+
+          <div class="result-actions">
+            <button type="button" class="action-button primary" id="setVideoAvatarButton">
+              <span class="button-icon">👤</span>
+              この動画をアバターに設定
+            </button>
+            <button type="button" class="action-button secondary" id="playVideoButton">
+              <span class="button-icon">▶️</span>
+              再生テスト
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ローディング表示 -->
+      <section class="loading-section" id="loadingSection" style="display: none;">
+        <div class="loading-card">
+          <div class="loading-spinner"></div>
+          <p>画像を生成中...</p>
+          <span class="loading-hint">30秒〜1分ほどかかる場合があります</span>
+        </div>
+      </section>
+
+      <!-- エラー表示 -->
+      <section class="error-section" id="errorSection" style="display: none;">
+        <div class="error-card">
+          <span class="error-icon">⚠️</span>
+          <p id="errorMessage">エラーが発生しました</p>
+          <button type="button" class="action-button secondary" id="retryButton">
+            再試行
+          </button>
+        </div>
+      </section>
+
+      <!-- ギャラリーセクション -->
+      <section class="gallery-section" id="gallerySection">
+        <div class="gallery-card">
+          <div class="gallery-header">
+            <h2>📁 保存済みキャラクター</h2>
+            <button type="button" class="refresh-button" id="refreshGalleryButton" title="更新">
+              🔄
+            </button>
+          </div>
+          <div class="gallery-grid" id="galleryGrid">
+            <!-- 画像がここに動的に追加される -->
+            <p class="gallery-empty" id="galleryEmpty">まだ保存された画像がありません</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="generator.js"></script>
+</body>
+
+</html>
